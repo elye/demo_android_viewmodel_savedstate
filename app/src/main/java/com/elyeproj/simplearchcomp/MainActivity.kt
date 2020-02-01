@@ -4,15 +4,8 @@ import android.app.Application
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.SavedStateViewModelFactory
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
-import kotlinx.android.synthetic.main.activity_main.my_container
-import kotlinx.android.synthetic.main.activity_main.my_text
+import androidx.lifecycle.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MyViewModel by lazy {
@@ -40,7 +33,7 @@ class MyViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel() 
         fun getViewModel(application: Application, fragmentActivity: FragmentActivity): MyViewModel {
             val defaultState = Bundle().apply { putInt(COUNT_KEY, 0) }
             val factory = SavedStateViewModelFactory(application, fragmentActivity, defaultState)
-            return ViewModelProviders.of(fragmentActivity, factory).get(MyViewModel::class.java)
+            return ViewModelProvider(fragmentActivity, factory).get(MyViewModel::class.java)
         }
     }
 
